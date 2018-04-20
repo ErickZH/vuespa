@@ -36,6 +36,10 @@ export default {
 			localStorage.removeItem("user");
 			state.isLoggedIn = false;
 			state.currentUser = null;
+		},
+		updateCustomers(state, payload)
+		{
+			state.customers = payload;
 		}
 	},
 	getters: {
@@ -59,6 +63,13 @@ export default {
 		login(context)
 		{
 			context.commit('login');
+		},
+		getCustomers(context)
+		{
+			axios.get('/api/customers')
+				.then((response) => {
+					context.commit('updateCustomers', response.data.customers);
+				});
 		}
 	}
 };
